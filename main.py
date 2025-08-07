@@ -235,8 +235,6 @@ with st.expander("📈 Simular una Temporada Completa"):
     
         for reason, team in qualified_teams:
             st.write(f"- **{team}**: {reason} ")
-
-        st.write(total_stats)
         
         st.success("Temporada simulada con éxito!")
 
