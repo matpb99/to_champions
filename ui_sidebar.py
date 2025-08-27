@@ -20,8 +20,7 @@ def get_current_standings(played_matches, groups):
     for match in played_matches:
         winner = match["winner"]
         loser = next(
-            (team for team in [match["team1"],
-             match["team2"]] if team != winner), None
+            (team for team in [match["team1"], match["team2"]] if team != winner), None
         )
         if loser is None:
             continue
@@ -35,16 +34,14 @@ def get_current_standings(played_matches, groups):
     alpha = dict(
         sorted(
             ((k, v) for k, v in standings.items() if k in groups["alpha"]),
-            key=lambda item: (item[1]["victorias"],
-                              item[1]["diferencia_mapas"]),
+            key=lambda item: (item[1]["victorias"], item[1]["diferencia_mapas"]),
             reverse=True,
         )
     )
     omega = dict(
         sorted(
             ((k, v) for k, v in standings.items() if k in groups["omega"]),
-            key=lambda item: (item[1]["victorias"],
-                              item[1]["diferencia_mapas"]),
+            key=lambda item: (item[1]["victorias"], item[1]["diferencia_mapas"]),
             reverse=True,
         )
     )
@@ -52,7 +49,6 @@ def get_current_standings(played_matches, groups):
 
 
 def display_sidebar():
-
     with st.sidebar:
         st.header("⚙️ Datos de Configuración")
 
@@ -80,8 +76,7 @@ def display_sidebar():
                             match["winner"],
                         )
                         unique_matches[key] = match
-                    st.session_state.played_matches = list(
-                        unique_matches.values())
+                    st.session_state.played_matches = list(unique_matches.values())
                     st.session_state.last_api_call_time = current_time
                     st.success("Partidos cargados con éxito!")
 
@@ -119,8 +114,7 @@ def display_sidebar():
             {"Equipo": team, **stats} for team, stats in alpha_standings.items()
         ]
         alpha_df = pd.DataFrame(alpha_data_for_df).rename(
-            columns={"victorias": "Victorias",
-                     "diferencia_mapas": "Dif. Mapas"}
+            columns={"victorias": "Victorias", "diferencia_mapas": "Dif. Mapas"}
         )
         st.dataframe(alpha_df, hide_index=True)
 
@@ -129,7 +123,6 @@ def display_sidebar():
             {"Equipo": team, **stats} for team, stats in omega_standings.items()
         ]
         omega_df = pd.DataFrame(omega_data_for_df).rename(
-            columns={"victorias": "Victorias",
-                     "diferencia_mapas": "Dif. Mapas"}
+            columns={"victorias": "Victorias", "diferencia_mapas": "Dif. Mapas"}
         )
         st.dataframe(omega_df, hide_index=True)

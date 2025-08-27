@@ -82,8 +82,7 @@ played_matches = [
         "loser": "Evil Geniuses",
         "score": "2-0",
     },
-    {"team1": "NRG", "team2": "LOUD", "winner": "NRG",
-        "loser": "LOUD", "score": "2-0"},
+    {"team1": "NRG", "team2": "LOUD", "winner": "NRG", "loser": "LOUD", "score": "2-0"},
     {
         "team1": "100 Thieves",
         "team2": "KRÜ Esports",

@@ -46,7 +46,6 @@ def generate_remaining_matches(groups, played_matches):
 
 
 def simulate_regular_season(groups, played_matches):
-
     standings = defaultdict(lambda: {"victorias": 0})
 
     for match in played_matches:
@@ -78,7 +77,6 @@ def simulate_regular_season(groups, played_matches):
 
 
 def simulate_playoffs(alpha_standings, omega_standings):
-
     playoff_results_dict = {}
 
     A1, A2, A3, A4 = list(alpha_standings.keys())[:4]
@@ -118,8 +116,7 @@ def simulate_playoffs(alpha_standings, omega_standings):
     }
 
     # Lower Bracket R1 (losers UQF)
-    lr1_1_winner, lr1_1_loser, lr1_1_score = simulate_match_bo3(
-        uqf1_loser, uqf2_loser)
+    lr1_1_winner, lr1_1_loser, lr1_1_score = simulate_match_bo3(uqf1_loser, uqf2_loser)
     playoff_results_dict["lr1_1"] = {
         "teams": (uqf1_loser, uqf2_loser),
         "winner": lr1_1_winner,
@@ -127,8 +124,7 @@ def simulate_playoffs(alpha_standings, omega_standings):
         "score": lr1_1_score,
     }
 
-    lr1_2_winner, lr1_2_loser, lr1_2_score = simulate_match_bo3(
-        uqf3_loser, uqf4_loser)
+    lr1_2_winner, lr1_2_loser, lr1_2_score = simulate_match_bo3(uqf3_loser, uqf4_loser)
     playoff_results_dict["lr1_2"] = {
         "teams": (uqf3_loser, uqf4_loser),
         "winner": lr1_2_winner,
@@ -137,8 +133,7 @@ def simulate_playoffs(alpha_standings, omega_standings):
     }
 
     # Upper Bracket SF
-    usf1_winner, usf1_loser, usf1_score = simulate_match_bo3(
-        uqf1_winner, uqf2_winner)
+    usf1_winner, usf1_loser, usf1_score = simulate_match_bo3(uqf1_winner, uqf2_winner)
     playoff_results_dict["usf1"] = {
         "teams": (uqf1_winner, uqf2_winner),
         "winner": usf1_winner,
@@ -146,8 +141,7 @@ def simulate_playoffs(alpha_standings, omega_standings):
         "score": usf1_score,
     }
 
-    usf2_winner, usf2_loser, usf2_score = simulate_match_bo3(
-        uqf3_winner, uqf4_winner)
+    usf2_winner, usf2_loser, usf2_score = simulate_match_bo3(uqf3_winner, uqf4_winner)
     playoff_results_dict["usf2"] = {
         "teams": (uqf3_winner, uqf4_winner),
         "winner": usf2_winner,
@@ -177,8 +171,7 @@ def simulate_playoffs(alpha_standings, omega_standings):
     }
 
     # Lower Bracket R3
-    lr3_winner, lr3_loser, lr3_score = simulate_match_bo3(
-        lr2_1_winner, lr2_2_winner)
+    lr3_winner, lr3_loser, lr3_score = simulate_match_bo3(lr2_1_winner, lr2_2_winner)
     playoff_results_dict["lr3"] = {
         "teams": (lr2_1_winner, lr2_2_winner),
         "winner": lr3_winner,
@@ -187,8 +180,7 @@ def simulate_playoffs(alpha_standings, omega_standings):
     }
 
     # Upper Final
-    uf_winner, uf_loser, uf_score = simulate_match_bo3(
-        usf1_winner, usf2_winner)
+    uf_winner, uf_loser, uf_score = simulate_match_bo3(usf1_winner, usf2_winner)
     playoff_results_dict["uf"] = {
         "teams": (usf1_winner, usf2_winner),
         "winner": uf_winner,
@@ -206,8 +198,7 @@ def simulate_playoffs(alpha_standings, omega_standings):
     }
 
     # Grand Final
-    grandf_winner, grandf_loser, grandf_score = simulate_match_bo5(
-        uf_winner, lf_winner)
+    grandf_winner, grandf_loser, grandf_score = simulate_match_bo5(uf_winner, lf_winner)
     playoff_results_dict["grandf"] = {
         "teams": (uf_winner, lf_winner),
         "winner": grandf_winner,
@@ -221,10 +212,8 @@ def simulate_playoffs(alpha_standings, omega_standings):
 
 
 def simulate_season(played_matches, groups, playoff_points, classification_points):
-
     # Simular temporada regular
-    alpha_standings, omega_standings = simulate_regular_season(
-        groups, played_matches)
+    alpha_standings, omega_standings = simulate_regular_season(groups, played_matches)
 
     # Simular playoffs
     playoff_results_dict, playoff_top_4_teams = simulate_playoffs(
@@ -250,8 +239,7 @@ def simulate_season(played_matches, groups, playoff_points, classification_point
 
     # GF Winner y Loser
     qualified_teams_with_reasons.append(
-        ("Clasificado como **Ganador** de los playoffs",
-         playoff_top_4_teams[0])
+        ("Clasificado como **Ganador** de los playoffs", playoff_top_4_teams[0])
     )
     qualified_teams_with_reasons.append(
         (
@@ -292,7 +280,6 @@ def simulate_season(played_matches, groups, playoff_points, classification_point
 def monte_carlo_simulation(
     n_simulations, played_matches, groups, playoff_points, classification_points
 ):
-
     results = Parallel(n_jobs=-1, backend="loky")(
         delayed(simulate_season)(
             played_matches, groups, playoff_points, classification_points
@@ -415,8 +402,7 @@ with st.expander("📈 Simular una Temporada Completa"):
         st.success("Temporada simulada con éxito!")
 
 st.header("📊 Simulación de Monte Carlo")
-n_simulations = st.number_input(
-    "Número de simulaciones:", 1000, 100000, 10000, 1000)
+n_simulations = st.number_input("Número de simulaciones:", 1000, 100000, 10000, 1000)
 if st.button("Ejecutar Simulación"):
     with st.spinner("Simulando temporadas...", show_time=True):
         current_played_matches = (
